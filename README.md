@@ -14,7 +14,7 @@ The EssayEvalPro is a system designed specifically for teachers to assist them i
 3. **Grammar Mistake Analysis:** Next, the system employs NLP tools to identify and highlight grammar mistakes and errors within the essay, providing valuable feedback to students for improvement.
 4. **Score Generation:** Based on the results obtained from the plagiarism detection, relevancy calculation, and grammar mistake analysis, the system generates a comprehensive score that reflects the quality and originality of the essay. This score assists teachers in objectively assessing and providing feedback to the students.
 ## Installation
-> **Note:** This project works on **python 3.9** 
+> **Note:** This project works on **python 3.8** 
 
 To set up the EssayEvalPro System, follow these steps:
 
