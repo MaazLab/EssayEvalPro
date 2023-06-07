@@ -1,0 +1,5 @@
+Flask==2.2.2
+pymongo==4.3.3
+sentence_transformers==2.2.2
+spacy==3.4.4
+strsimpy==0.2.1
