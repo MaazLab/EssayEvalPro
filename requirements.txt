@@ -1,6 +1,8 @@
-Flask==2.2.2
-pymongo==4.3.3
-sentence_transformers==2.2.2
-spacy==3.4.4
-strsimpy==0.2.1
+Flask==2.3.2
 happytransformer==2.4.1
+numpy==1.24.3
+pdfminer==20191125
+pymongo==4.3.3
+scikit_learn==1.2.2
+sentence_transformers==2.2.2
+spacy==3.5.3
