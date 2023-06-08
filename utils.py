@@ -1,19 +1,25 @@
 from sentence_transformers import util
 import string
-import difflib
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 import spacy
+from pdfminer.pdfpage import PDFPage
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
 
 # Data Processing English language model in spaCy
 nlp = spacy.load("en_core_web_sm")
 
-def Title_Essay_Relevancy(model, title,essay):
+def Title_Essay_Relevancy(model, title, essay, thresh):
 
     title_embedding = model.encode(title)
     essay_embedding = model.encode(essay)
-
-    return util.dot_score(title_embedding, essay_embedding).item()
+    
+    actual = util.dot_score(title_embedding, essay_embedding).item()
+    diff = 1 - actual
+    rel = diff*thresh
+    return rel+actual
 
 def Preprocess(essay):
     # Tokenization, lowercasing, stopword removal, punctuation removal, lemmatization
@@ -56,18 +62,32 @@ def plag_calculate(essay, essay_list):
                 max_plag_score = plag_score
                 max_plag_essay = essay_list[idx]
 
-    # Adjust the maximum plagiarism score to be between 0 and 1
-    max_plag_score = max(0, min(max_plag_score, 1))
+    max_plag_score = max_plag_score
 
     return max_plag_essay, max_plag_score
 
-def Grammar_Spell_Check(gs_model, gs_model_args, essay, cosine_obj):
+def Grammar_Spell_Check(gs_model, gs_model_args, essay, thresh):
     doc = nlp(essay)
     sentences = [sent.text for sent in doc.sents]
     corrected_essay = ''
     for sentence in sentences:
         corrected_essay+= gs_model.generate_text(f"grammar: {sentence}", args=gs_model_args).text+' '
+        
 
     similarities, _ = DotProduct_calculate(essay=essay, essay_list=corrected_essay)
-    print('similarities ',similarities)
-    return min(similarities), corrected_essay
+    actual = min(similarities)
+    diff = 1 - actual
+    rel = diff*thresh
+    return rel+actual,corrected_essay
+
+ 
+def pdf_to_text(input_file):
+    file = open(input_file,'rb')
+    resMgr = PDFResourceManager()
+    retData = io.StringIO()
+    TxtConverter = TextConverter(resMgr,retData, laparams= LAParams())
+    interpreter = PDFPageInterpreter(resMgr,TxtConverter)
+    for page in PDFPage.get_pages(file):
+        interpreter.process_page(page)
+ 
+    return retData.getvalue()
