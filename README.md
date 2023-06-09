@@ -44,6 +44,6 @@ Contributions to the Essay Relevance and Plagiarism Detection System are welcome
 Please ensure that your contributions align with the project's coding standards and guidelines.
 
 ## Contact
-If you have any questions, suggestions, or feedback regarding the Essay Relevance and Plagiarism Detection System, please feel free to reach out to us at [email protected]
+If you have any questions, suggestions, or feedback regarding the Essay Relevance and Plagiarism Detection System, please feel free to reach out to us at [maaz.rafique.75@gmail.com]
 
 Happy evaluating!
